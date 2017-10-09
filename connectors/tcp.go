@@ -59,16 +59,16 @@ func (t *TCPConnector) handleCommands(conn net.Conn) {
 		s = strings.Trim(s, "\r\n ")
 		log.Println(s)
 		cmd := strings.Split(s, " ")
+		cmd[0] = strings.ToUpper(cmd[0])
 		switch cmd[0] {
-		case "set":
-			fallthrough
 		case "SET":
 			keyName := ""
 			valSize := 0
 			keyName, valSize, err = checkSETParams(cmd)
 			if err == nil {
 				log.Print("Parsed :", cmd, keyName)
-				val, err := rw.ReadBytes('\n')
+				var val []byte
+				val, err = rw.ReadBytes('\n')
 				log.Print("Parsed data:", val)
 
 				if err == nil {
@@ -86,8 +86,6 @@ func (t *TCPConnector) handleCommands(conn net.Conn) {
 					}
 				}
 			}
-		case "get":
-			fallthrough
 		case "GET":
 			keyName := ""
 			keyName, err = checkGETParams(cmd)
@@ -99,24 +97,24 @@ func (t *TCPConnector) handleCommands(conn net.Conn) {
 				data = append(data, '\n')
 				_, err = rw.WriteString(string(data))
 			}
-		case "delete":
-			fallthrough
 		case "DELETE":
 			if len(cmd) != 2 {
 				err = fmt.Errorf("incorrect number of arguments: DELETE KEY")
 			} else {
 				kv.Delete(cmd[1])
+				rw.WriteString("OK")
 			}
-		case "stats":
-			fallthrough
 		case "STATS":
 			st := kv.GetStats()
 			ans := fmt.Sprintf("%+v", st)
 			_, err = rw.WriteString(ans)
-
+		case "CONTENTS":
+			ans := kv.PrintEntries()
+			_, err = rw.WriteString(ans)
 		}
+		log.Print(err)
+
 		if err != nil {
-			log.Print(err)
 			_, err = rw.WriteString(err.Error())
 			if err != nil {
 				log.Println("Cannot write to connection.\n", err)
