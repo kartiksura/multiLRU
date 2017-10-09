@@ -18,14 +18,16 @@ go build
 
 The key value server runs on port 61000
 
-netcat can be used for operations on the tcp server:
+netcat can be used for operations on the tcp server
 nc 127.0.0.1  "61000" -C
-> set kartik 4
-> sura
-< OK
-> get kartik
-< VALUE 4
-< sura
+set kartik 4
+sura
+
+OK
+
+get kartik
+VALUE 4
+sura
 
 > delete kartik
 < OK
