@@ -1,5 +1,6 @@
 # multiLRU
-Implements Key value cache server.
+Implements Key value cache server. The memory capacity set is the size of all the values. in the store. It can be set in the file tcp.go in the init()
+
 There are two implementations supported:
 ## Simple Store
 It is implemented as a simple Least Recently used data structure. It uses golang native heap for maintaining the queue of the objects to be evicted once the store is full. 
