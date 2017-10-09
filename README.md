@@ -41,7 +41,7 @@ OK
 get kartik
 VALUE 0
 
-Additional commands
+# Additional commands
 stats
 
 {Sets:1 Gets:2 Success:1 MemoryUsed:0 Capacity:100}
