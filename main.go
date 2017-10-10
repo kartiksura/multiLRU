@@ -1,6 +1,6 @@
 package main
 
-import "github.com/kartiksura/kvstore/connectors"
+import "github.com/kartiksura/multiLRU/connectors"
 
 func main() {
 	var tcp connectors.TCPConnector

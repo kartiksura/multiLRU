@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/kartiksura/kvstore/store"
+	"github.com/kartiksura/multiLRU/store"
 )
 
 var kv store.KVStore
